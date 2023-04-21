@@ -47,8 +47,59 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
 
 
 void insertTreeMap(TreeMap * tree, void* key, void * value) {
+  if (tree == NULL) {
+        return; // Árbol nulo, no se puede insertar el dato
+    }
 
+    // Buscar la posición de inserción
+    Pair* search_result = searchTreeMap(tree, key);
+    if (search_result != NULL) {
+        return; // La clave ya existe, no se puede insertar el dato
+    }
+
+    // Crear nuevo nodo
+    TreeNode* new_node = (TreeNode*) malloc(sizeof(TreeNode));
+    if (new_node == NULL) {
+        return; // Error de asignación de memoria
+    }
+
+    // Inicializar nuevo nodo
+    new_node->pair->key = key;
+    new_node->pair->value = value;
+    new_node->left = NULL;
+    new_node->right = NULL;
+
+    // Insertar el nuevo nodo en el árbol
+    if (tree->root == NULL) {
+        tree->root = new_node; // Árbol vacío, el nuevo nodo se convierte en la raíz
+    } else {
+        TreeNode* current = tree->current;
+        int cmp_result = tree->lower_than(key, current->key);
+        while (1) {
+            if (cmp_result) {
+                // El nuevo nodo va a la izquierda
+                if (current->left == NULL) {
+                    current->left = new_node; // Encontró la posición de inserción
+                    break;
+                } else {
+                    current = current->left;
+                }
+            } else {
+                // El nuevo nodo va a la derecha
+                if (current->right == NULL) {
+                    current->right = new_node; // Encontró la posición de inserción
+                    break;
+                } else {
+                    current = current->right;
+                }
+            }
+            cmp_result = tree->lower_than(key, current->key);
+        }
+    }
+
+    tree->current = new_node; // Hacer que el current apunte al nuevo nodo
 }
+
 
 TreeNode * minimum(TreeNode * x){
 
