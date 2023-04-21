@@ -47,60 +47,42 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
 
 
 void insertTreeMap(TreeMap * tree, void* key, void * value) {
-  if (tree == NULL) {
-        return; // Árbol nulo, no se puede insertar el dato
+  if (tree == NULL) return; // Árbol no válido
+    if (searchTreeMap(tree, key) != NULL) return; // Clave duplicada, retorna sin hacer nada
+
+    TreeNode* new_node = createTreeNode(key, value); // Crea un nuevo nodo con la clave y valor dados
+
+    if (tree->root == NULL) { // Si el árbol está vacío, el nuevo nodo se convierte en la raíz
+        tree->root = new_node;
+        tree->current = new_node;
+        return;
     }
 
-    // Buscar la posición de inserción
-    TreeNode* current = tree->root;
-    TreeNode* parent = NULL;
-    int cmp_result = 0;
+    TreeNode* current = tree->root; // Comienza la búsqueda desde la raíz
 
-    while (current != NULL) {
-        cmp_result = tree->lower_than(key, current->pair->key);
-        if (cmp_result == 0) {
-            return; // La clave ya existe, no se puede insertar el dato
-        } else {
-            parent = current;
-            if (cmp_result < 0) {
-                current = current->left; // Ir a la rama izquierda
-            } else {
-                current = current->right; // Ir a la rama derecha
+    while (1) {
+        if (tree->lower_than(key, current->pair->key)) {
+            // Si la clave es menor a la clave del nodo actual, se mueve a la rama izquierda
+            if (current->left == NULL) {
+                // Si no hay más nodos en la rama izquierda, enlaza el nuevo nodo como hijo izquierdo del nodo actual
+                current->left = new_node;
+                new_node->parent = current;
+                tree->current = new_node;
+                return;
             }
-        }
-    }
-
-    // Crear nuevo nodo
-    TreeNode* new_node = (TreeNode*) malloc(sizeof(TreeNode));
-    if (new_node == NULL) {
-        return; // Error de asignación de memoria
-    }
-
-    // Inicializar nuevo nodo
-    new_node->pair = (Pair*) malloc(sizeof(Pair));
-    if (new_node->pair == NULL) {
-        free(new_node); // Liberar memoria asignada previamente
-        return; // Error de asignación de memoria
-    }
-    new_node->pair->key = key;
-    new_node->pair->value = value;
-    new_node->left = NULL;
-    new_node->right = NULL;
-    new_node->parent = parent;
-
-    // Insertar el nuevo nodo en el árbol
-    if (parent == NULL) {
-        tree->root = new_node; // Árbol vacío, el nuevo nodo se convierte en la raíz
-    } else {
-        cmp_result = tree->lower_than(key, parent->pair->key);
-        if (cmp_result < 0) {
-            parent->left = new_node; // Insertar el nuevo nodo como hijo izquierdo del padre
+            current = current->left;
         } else {
-            parent->right = new_node; // Insertar el nuevo nodo como hijo derecho del padre
+            // Si la clave es mayor o igual a la clave del nodo actual, se mueve a la rama derecha
+            if (current->right == NULL) {
+                // Si no hay más nodos en la rama derecha, enlaza el nuevo nodo como hijo derecho del nodo actual
+                current->right = new_node;
+                new_node->parent = current;
+                tree->current = new_node;
+                return;
+            }
+            current = current->right;
         }
-    }
-
-    tree->current = new_node;
+    }  
 }
 
 TreeNode * minimum(TreeNode * x){
