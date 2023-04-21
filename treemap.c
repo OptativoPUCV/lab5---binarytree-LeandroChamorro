@@ -74,7 +74,7 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
         tree->root = new_node; // Árbol vacío, el nuevo nodo se convierte en la raíz
     } else {
         TreeNode* current = tree->current;
-        int cmp_result = tree->lower_than(key, current->key);
+        int cmp_result = tree->lower_than(key, current->pair->key);
         while (1) {
             if (cmp_result) {
                 // El nuevo nodo va a la izquierda
@@ -93,7 +93,7 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
                     current = current->right;
                 }
             }
-            cmp_result = tree->lower_than(key, current->key);
+            cmp_result = tree->lower_than(key, current->pair->key);
         }
     }
 
