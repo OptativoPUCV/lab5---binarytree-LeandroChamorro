@@ -47,24 +47,22 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
 
 
 void insertTreeMap(TreeMap * tree, void* key, void * value) {
-  if (tree == NULL) return; // Árbol no válido
-    if (searchTreeMap(tree, key) != NULL) return; // Clave duplicada, retorna sin hacer nada
+  if (tree == NULL) return; 
+    if (searchTreeMap(tree, key) != NULL) return; 
 
-    TreeNode* new_node = createTreeNode(key, value); // Crea un nuevo nodo con la clave y valor dados
+    TreeNode* new_node = createTreeNode(key, value); 
 
-    if (tree->root == NULL) { // Si el árbol está vacío, el nuevo nodo se convierte en la raíz
+    if (tree->root == NULL) { 
         tree->root = new_node;
         tree->current = new_node;
         return;
     }
 
-    TreeNode* current = tree->root; // Comienza la búsqueda desde la raíz
+    TreeNode* current = tree->root; 
 
     while (1) {
         if (tree->lower_than(key, current->pair->key)) {
-            // Si la clave es menor a la clave del nodo actual, se mueve a la rama izquierda
             if (current->left == NULL) {
-                // Si no hay más nodos en la rama izquierda, enlaza el nuevo nodo como hijo izquierdo del nodo actual
                 current->left = new_node;
                 new_node->parent = current;
                 tree->current = new_node;
@@ -72,9 +70,7 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
             }
             current = current->left;
         } else {
-            // Si la clave es mayor o igual a la clave del nodo actual, se mueve a la rama derecha
             if (current->right == NULL) {
-                // Si no hay más nodos en la rama derecha, enlaza el nuevo nodo como hijo derecho del nodo actual
                 current->right = new_node;
                 new_node->parent = current;
                 tree->current = new_node;
@@ -86,8 +82,10 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
 }
 
 TreeNode * minimum(TreeNode * x){
-
-    return NULL;
+    while (x!= NULL && x->left != NULL){
+      x=x->left;
+    }
+    return x;
 }
 
 
