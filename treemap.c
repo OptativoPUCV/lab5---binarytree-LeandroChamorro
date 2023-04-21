@@ -100,7 +100,7 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
         }
     }
 
-    tree->current = new_node; // Hacer que el current apunte al nuevo nodo
+    tree->current = new_node;
 }
 
 TreeNode * minimum(TreeNode * x){
