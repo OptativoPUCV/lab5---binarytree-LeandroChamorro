@@ -131,8 +131,8 @@ void removeNode(TreeMap * tree, TreeNode* node) {
         // Descender al hijo derecho y obtener el nodo mínimo del subárbol
         TreeNode* minNode = minimum(node->right);
         // Reemplazar los datos (key, value) de node con los del nodo mínimo
-        Pair* nodeData = (Pair*)node->data;
-        Pair* minNodeData = (Pair*)minNode->data;
+        Pair* nodeData = (Pair*)node;
+        Pair* minNodeData = (Pair*)minNode;
         nodeData->key = minNodeData->key;
         nodeData->value = minNodeData->value;
         // Eliminar el nodo mínimo recursivamente
