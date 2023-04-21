@@ -180,18 +180,16 @@ Pair * firstTreeMap(TreeMap * tree) {
         return NULL;
     }
 
-    TreeNode * currentNode = tree->root;
-    while (currentNode->left != NULL) {
-        currentNode = currentNode->left;
-    }
-
-    tree->current = currentNode;
-
-    return (Pair *)currentNode->data;
+    
     */
     return NULL;
 }
 
 Pair * nextTreeMap(TreeMap * tree) {
+    /*
+    if (tree == NULL || tree->current == NULL) {
+        return NULL;
+    }
+    */
     return NULL;
 }
