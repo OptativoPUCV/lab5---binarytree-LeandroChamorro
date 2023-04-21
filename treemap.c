@@ -92,54 +92,47 @@ TreeNode * minimum(TreeNode * x){
 void removeNode(TreeMap * tree, TreeNode* node) {
   if (tree == NULL || node == NULL) return;
 
-    // Caso 1: Nodo sin hijos
+    // C1 0h
     if (node->left == NULL && node->right == NULL) {
         if (node == tree->root) {
-            // Caso especial: Nodo es la raíz del árbol
             tree->root = NULL;
         } else {
-            // Anular el puntero del padre que apuntaba al nodo
             if (node->parent->left == node) {
                 node->parent->left = NULL;
             } else {
                 node->parent->right = NULL;
             }
         }
-        free(node); // Liberar memoria del nodo
+        free(node);
     }
-    // Caso 2: Nodo con un hijo
+    // C2 1h
     else if (node->left == NULL || node->right == NULL) {
-        TreeNode* child = (node->left != NULL) ? node->left : node->right;
+        TreeNode* hijo = (node->left != NULL) ? node->left : node->right;
 
         if (node == tree->root) {
-            // Caso especial: Nodo es la raíz del árbol
-            tree->root = child;
-            if (child != NULL) {
-                child->parent = NULL;
+            tree->root = hijo;
+            if (hijo != NULL) {
+                hijo->parent = NULL;
             }
         } else {
-            // El padre del nodo pasa a ser padre de su hijo
             if (node->parent->left == node) {
-                node->parent->left = child;
+                node->parent->left = hijo;
             } else {
-                node->parent->right = child;
+                node->parent->right = hijo;
             }
-            if (child != NULL) {
-                child->parent = node->parent;
+            if (hijo != NULL) {
+                hijo->parent = node->parent;
             }
         }
-        free(node); // Liberar memoria del nodo
+        free(node);
     }
-    // Caso 3: Nodo con dos hijos
+    // C3 2h
     else {
-        // Descender al hijo derecho y obtener el nodo mínimo del subárbol
         TreeNode* minNode = minimum(node->right);
-        // Reemplazar los datos (key, value) de node con los del nodo mínimo
-        Pair* nodeData = (Pair*)node->data;
-        Pair* minNodeData = (Pair*)minNode->data;
+        Pair* nodeData = (Pair*)node;
+        Pair* minNodeData = (Pair*)minNode;
         nodeData->key = minNodeData->key;
         nodeData->value = minNodeData->value;
-        // Eliminar el nodo mínimo recursivamente
         removeNode(tree, minNode);
     }
 }
