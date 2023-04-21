@@ -52,9 +52,22 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
     }
 
     // Buscar la posición de inserción
-    Pair* search_result = searchTreeMap(tree, key);
-    if (search_result != NULL) {
-        return; // La clave ya existe, no se puede insertar el dato
+    TreeNode* current = tree->root;
+    TreeNode* parent = NULL;
+    int cmp_result = 0;
+
+    while (current != NULL) {
+        cmp_result = tree->lower_than(key, current->pair->key);
+        if (cmp_result == 0) {
+            return; // La clave ya existe, no se puede insertar el dato
+        } else {
+            parent = current;
+            if (cmp_result < 0) {
+                current = current->left; // Ir a la rama izquierda
+            } else {
+                current = current->right; // Ir a la rama derecha
+            }
+        }
     }
 
     // Crear nuevo nodo
@@ -64,42 +77,31 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
     }
 
     // Inicializar nuevo nodo
+    new_node->pair = (Pair*) malloc(sizeof(Pair));
+    if (new_node->pair == NULL) {
+        free(new_node); // Liberar memoria asignada previamente
+        return; // Error de asignación de memoria
+    }
     new_node->pair->key = key;
     new_node->pair->value = value;
     new_node->left = NULL;
     new_node->right = NULL;
+    new_node->parent = parent;
 
     // Insertar el nuevo nodo en el árbol
-    if (tree->root == NULL) {
+    if (parent == NULL) {
         tree->root = new_node; // Árbol vacío, el nuevo nodo se convierte en la raíz
     } else {
-        TreeNode* current = tree->current;
-        int cmp_result = tree->lower_than(key, current->pair->key);
-        while (1) {
-            if (cmp_result) {
-                // El nuevo nodo va a la izquierda
-                if (current->left == NULL) {
-                    current->left = new_node; // Encontró la posición de inserción
-                    break;
-                } else {
-                    current = current->left;
-                }
-            } else {
-                // El nuevo nodo va a la derecha
-                if (current->right == NULL) {
-                    current->right = new_node; // Encontró la posición de inserción
-                    break;
-                } else {
-                    current = current->right;
-                }
-            }
-            cmp_result = tree->lower_than(key, current->pair->key);
+        cmp_result = tree->lower_than(key, parent->pair->key);
+        if (cmp_result < 0) {
+            parent->left = new_node; // Insertar el nuevo nodo como hijo izquierdo del padre
+        } else {
+            parent->right = new_node; // Insertar el nuevo nodo como hijo derecho del padre
         }
     }
 
     tree->current = new_node; // Hacer que el current apunte al nuevo nodo
 }
-
 
 TreeNode * minimum(TreeNode * x){
 
