@@ -1,4 +1,3 @@
-//Por alguna razon se me negaba el acceso a test.sh entonces ocupe un comando chmod +x test.sh
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -179,7 +178,7 @@ Pair * firstTreeMap(TreeMap * tree) {
     if (tree == NULL || tree->root == NULL) {
         return NULL;
     }
-
+    
     
     */
     return NULL;
