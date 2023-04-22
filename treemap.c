@@ -107,7 +107,13 @@ void removeNode(TreeMap * tree, TreeNode* node) {
     
   // C2 1h
   else if (node->left == NULL || node->right == NULL) {
-    TreeNode* hijo = (node->left != NULL) ? node->left : node->right;
+    TreeNode* hijo;
+    if (node->left != NULL){
+      hijo = node->left;
+    }
+    else{
+      hijo = node->right;
+    }
 
     if (node == tree->root) {
       tree->root = hijo;
@@ -168,7 +174,7 @@ return NULL;
 
 Pair * upperBound(TreeMap * tree, void* key) {
   TreeNode* currentNode = tree->root;
-  TreeNode* nodo = NULL;
+  TreeNode* node = NULL;
 
   while (currentNode != NULL) {
     int cmp = is_equal(tree, key, currentNode->pair->key);
@@ -178,7 +184,7 @@ Pair * upperBound(TreeMap * tree, void* key) {
     return currentNode->pair;
     } 
     else if (tree->lower_than(key, currentNode->pair->key)) {
-      nodo = currentNode;
+      node = currentNode;
       currentNode = currentNode->left;
     } 
     else {
@@ -186,12 +192,12 @@ Pair * upperBound(TreeMap * tree, void* key) {
     }
   }
 
-  if (nodo == NULL) {
+  if (node == NULL) {
     return NULL;
   } 
   else {
-    tree->current = nodo;
-    return nodo->pair;
+    tree->current = node;
+    return node->pair;
   }
 }
 
