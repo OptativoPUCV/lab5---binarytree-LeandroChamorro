@@ -205,3 +205,16 @@ treemap.c:177:23: error: ‘TreeMap’ has no member named ‘is_equal’
       |                       ^~
 Compilation failed
 dfdcfb4
+Sat 22 Apr 2023 03:00:10 PM UTC: 
+ treemap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+In file included from test.c:4:
+treemap.c: In function ‘upperBound’:
+treemap.c:177:19: error: too few arguments to function ‘is_equal’
+  177 |         int cmp = is_equal(key, currentNode->pair->key);
+      |                   ^~~~~~~~
+treemap.c:22:5: note: declared here
+   22 | int is_equal(TreeMap* tree, void* key1, void* key2){
+      |     ^~~~~~~~
+Compilation failed
+aaf2bc2
