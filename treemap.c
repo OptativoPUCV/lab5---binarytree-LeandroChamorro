@@ -177,26 +177,26 @@ Pair * firstTreeMap(TreeMap * tree) {
     if (tree == NULL || tree->root == NULL) return NULL; // Árbol vacío
 
     TreeNode* current = tree->root;
-    TreeNode* minimumNode = minimum(current); // Se obtiene el nodo mínimo
+    TreeNode* minimumNode = minimum(current);
 
     if (minimumNode != NULL) {
-        tree->current = minimumNode; // Se actualiza el current del TreeMap
-        return minimumNode->pair; // Se retorna el Pair asociado al primer nodo (el menor)
+        tree->current = minimumNode; 
+        return minimumNode->pair; 
     } else {
-        return NULL; // No hay primer nodo
+        return NULL; 
     }
 }
 
 Pair * nextTreeMap(TreeMap * tree) {
-    if (tree == NULL || tree->current == NULL) return NULL; // Árbol vacío o current no definido
+    if (tree == NULL || tree->current == NULL) return NULL; 
 
     TreeNode* current = tree->current;
 
-    // Caso 1: Si el nodo tiene un hijo derecho, el siguiente es el nodo más a la izquierda del subárbol derecho
+    // C1 0D
     if (current->right != NULL) {
         current = minimum(current->right);
     }
-    // Caso 2: Si el nodo no tiene hijo derecho, el siguiente es el primer ancestro derecho
+    // C2 1I 0D
     else {
         TreeNode* parent = current->parent;
         while (parent != NULL && current == parent->right) {
@@ -207,9 +207,9 @@ Pair * nextTreeMap(TreeMap * tree) {
     }
 
     if (current != NULL) {
-        tree->current = current; // Se actualiza el current del TreeMap
-        return current->pair; // Se retorna el Pair asociado al siguiente nodo
+        tree->current = current;
+        return current->pair;
     } else {
-        return NULL; // No hay siguiente nodo
+        return NULL;
     }
 }
