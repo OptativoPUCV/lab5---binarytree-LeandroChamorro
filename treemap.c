@@ -174,21 +174,21 @@ Pair * upperBound(TreeMap * tree, void* key) {
 }
 
 Pair * firstTreeMap(TreeMap * tree) {
-    /*
-    if (tree == NULL || tree->root == NULL) {
-        return NULL;
+    if (tree == NULL || tree->root == NULL) return NULL; // Árbol vacío
+
+    TreeNode* current = tree->root;
+    TreeNode* minimumNode = minimum(current); // Se obtiene el nodo mínimo
+
+    if (minimumNode != NULL) {
+        tree->current = minimumNode; // Se actualiza el current del TreeMap
+        return minimumNode->pair; // Se retorna el Pair asociado al primer nodo (el menor)
+    } else {
+        return NULL; // No hay primer nodo
     }
-    
-    
-    */
     return NULL;
 }
 
 Pair * nextTreeMap(TreeMap * tree) {
-    /*
-    if (tree == NULL || tree->current == NULL) {
-        return NULL;
-    }
-    */
+    
     return NULL;
 }
