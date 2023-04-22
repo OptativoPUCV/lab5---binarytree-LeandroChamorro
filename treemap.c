@@ -186,51 +186,55 @@ Pair * upperBound(TreeMap * tree, void* key) {
     }
   }
 
-    if (ub_node == NULL) {
-        return NULL;
-    } else {
-        tree->current = ub_node;
-        return ub_node->pair;
-    }
+  if (ub_node == NULL) {
+    return NULL;
+  } 
+  else {
+    tree->current = ub_node;
+    return ub_node->pair;
+  }
 }
 
 Pair * firstTreeMap(TreeMap * tree) {
-    if (tree == NULL || tree->root == NULL) return NULL; // Árbol vacío
+  if (tree == NULL || tree->root == NULL) return NULL;
 
-    TreeNode* current = tree->root;
-    TreeNode* minimumNode = minimum(current);
+  TreeNode* current = tree->root;
+  TreeNode* minimumNode = minimum(current);
 
-    if (minimumNode != NULL) {
-        tree->current = minimumNode; 
-        return minimumNode->pair; 
-    } else {
-        return NULL; 
-    }
+  if (minimumNode != NULL) {
+    tree->current = minimumNode; 
+    return minimumNode->pair; 
+  } 
+  else {
+    return NULL; 
+  }
 }
 
 Pair * nextTreeMap(TreeMap * tree) {
-    if (tree == NULL || tree->current == NULL) return NULL; 
+  if (tree == NULL || tree->current == NULL) return NULL; 
 
-    TreeNode* current = tree->current;
+  TreeNode* current = tree->current;
 
-    // C1 0D
-    if (current->right != NULL) {
-        current = minimum(current->right);
-    }
-    // C2 1I 0D
-    else {
-        TreeNode* parent = current->parent;
-        while (parent != NULL && current == parent->right) {
-            current = parent;
-            parent = parent->parent;
-        }
-        current = parent;
-    }
+  // C1 0D
+  if (current->right != NULL) {
+    current = minimum(current->right);
+  }
+  
+  // C2 1I 0D
+  else {
+  TreeNode* parent = current->parent;
+  while (parent != NULL && current == parent->right) {
+    current = parent;
+    parent = parent->parent;
+  }
+  current = parent;
+  }
 
-    if (current != NULL) {
-        tree->current = current;
-        return current->pair;
-    } else {
-        return NULL;
-    }
+  if (current != NULL) {
+    tree->current = current;
+    return current->pair;
+  } 
+  else {
+    return NULL;
+  }
 }
