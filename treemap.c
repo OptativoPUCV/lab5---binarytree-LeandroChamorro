@@ -174,7 +174,7 @@ Pair * upperBound(TreeMap * tree, void* key) {
     TreeNode* ub_node = NULL;
 
     while (currentNode != NULL) {
-        int cmp = tree->compare(key, currentNode->pair->key);
+        int cmp = tree->is_equal(key, currentNode->pair->key);
 
         if (cmp == 0) {
             return currentNode->pair;
