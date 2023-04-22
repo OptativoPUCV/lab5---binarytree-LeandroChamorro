@@ -168,7 +168,7 @@ return NULL;
 
 Pair * upperBound(TreeMap * tree, void* key) {
   TreeNode* currentNode = tree->root;
-  TreeNode* ub_node = NULL;
+  TreeNode* nodo = NULL;
 
   while (currentNode != NULL) {
     int cmp = is_equal(tree, key, currentNode->pair->key);
@@ -178,7 +178,7 @@ Pair * upperBound(TreeMap * tree, void* key) {
     return currentNode->pair;
     } 
     else if (tree->lower_than(key, currentNode->pair->key)) {
-      ub_node = currentNode;
+      nodo = currentNode;
       currentNode = currentNode->left;
     } 
     else {
@@ -186,12 +186,12 @@ Pair * upperBound(TreeMap * tree, void* key) {
     }
   }
 
-  if (ub_node == NULL) {
+  if (nodo == NULL) {
     return NULL;
   } 
   else {
-    tree->current = ub_node;
-    return ub_node->pair;
+    tree->current = nodo;
+    return nodo->pair;
   }
 }
 
