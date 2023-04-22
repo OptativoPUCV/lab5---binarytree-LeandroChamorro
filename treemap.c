@@ -185,7 +185,6 @@ Pair * firstTreeMap(TreeMap * tree) {
     } else {
         return NULL; // No hay primer nodo
     }
-    return NULL;
 }
 
 Pair * nextTreeMap(TreeMap * tree) {
